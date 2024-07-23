@@ -64,15 +64,17 @@ td {
 	border-bottom: 1px solid #ddd;
 }
 
-#customers tr:nth-child(even) {
+/* #customers tr:nth-child(even) {
 	background-color: #ffffff;
-}
+} */
 
 #customers tr:hover {
 	background-color: #e4c3ff57;
 	cursor: pointer;
 }
-
+.lighted {
+	background-color: rgba(220, 105, 255, 0.397); /* Set the desired color here */
+  }
 #customers th {
 	padding-top: 3px;
 	padding-bottom: 3px;

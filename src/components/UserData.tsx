@@ -64,11 +64,12 @@ const UserData: React.FC = () => {
 		setFilteredData(filtered);
 	};
 
-
-  const handleNameSubmit = (value: string) => {
-    setSelectedCity(value)
-  };
-
+	const handleNameSubmit = (value: string) => {
+		setSelectedCity(value);
+	};
+  const handleClear = () =>{
+    setQuery("")
+  }
 	return (
 		<div className="data_field">
 			<div>
@@ -88,9 +89,12 @@ const UserData: React.FC = () => {
 							</div>
 						</div>
 
-						<Dropdown data={data} handleNameSubmit={handleNameSubmit} />
+						<Dropdown
+							data={data}
+							handleNameSubmit={handleNameSubmit}
+						/>
 
-						<div className="clear">
+						<div className="clear" onClick={handleClear}>
 							<MdOutlineDeleteOutline />
 						</div>
 					</div>
@@ -114,7 +118,7 @@ const UserData: React.FC = () => {
 				{!loading ? (
 					<table id="customers">
 						<thead>
-							<tr>
+							<tr >
 								<th>Name</th>
 								<th>City</th>
 								<th>Birthday</th>
@@ -122,7 +126,7 @@ const UserData: React.FC = () => {
 						</thead>
 						<tbody>
 							{filteredData.slice(0, 10).map((itm) => (
-								<tr key={itm.id}>
+								<tr key={itm.id}  className={checked ? "lighted" : ""}>
 									<td>
 										{itm.firstName + ' ' + itm.lastName}
 									</td>
