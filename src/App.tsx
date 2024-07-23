@@ -1,5 +1,5 @@
 import dpsLogo from './assets/dps_favicon.png';
-import UserData from './components/UserData.jsx';
+import UserData from './components/UserData.tsx';
 import './App.css';
 
 function App() {

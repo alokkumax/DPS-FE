@@ -1,20 +1,20 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
-import { RiCheckboxBlankCircleLine } from 'react-icons/ri';
-import { RiCheckboxCircleLine } from 'react-icons/ri';
+import {
+	RiCheckboxBlankCircleLine,
+	RiCheckboxCircleLine,
+} from 'react-icons/ri';
 import Dropdown from './Dropdown';
 
-function UserData() {
-	const [data, setData] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-	const [query, setQuery] = useState('');
-
-	const [filteredData, setFilteredData] = useState([]);
-	const [checked, setChecked] = useState(false);
+const UserData: React.FC = () => {
+	const [data, setData] = useState<any[]>([]);
+	const [loading, setLoading] = useState<boolean>(true);
+	// const [error, setError] = useState<Error | null>(null);
+	const [query, setQuery] = useState<string>('');
+	const [filteredData, setFilteredData] = useState<any[]>([]);
+	const [checked, setChecked] = useState<boolean>(false);
+	const [selectedCity, setSelectedCity] = useState<string>('');
 
 	const handleChecked = () => {
 		setChecked(!checked);
@@ -30,7 +30,7 @@ function UserData() {
 			setData(res.users);
 			console.log('tap');
 		} catch (error) {
-			setError(error);
+			// setError(error as Error);
 		} finally {
 			setLoading(false);
 		}
@@ -39,9 +39,11 @@ function UserData() {
 	useEffect(() => {
 		fetchData();
 	}, []);
+
 	useEffect(() => {
 		setFilteredData(data);
 	}, [data]);
+
 	useEffect(() => {
 		if (query.length > 0) {
 			getFilteredItems(query, data);
@@ -50,18 +52,22 @@ function UserData() {
 		}
 	}, [query]);
 
-	const getFilteredItems = (query, data) => {
-		// search functionality with NAME
+	const getFilteredItems = (query: string, data: any[]) => {
 		if (!query) {
 			setFilteredData(data);
 		}
-		let t = data.filter(
-			(data) =>
-				data.firstName.toUpperCase().startsWith(query.toUpperCase()) ||
-				data.lastName.toUpperCase().startsWith(query.toUpperCase())
-		); // for case sensitivity
-		setFilteredData(t);
+		const filtered = data.filter(
+			(user) =>
+				user.firstName.toUpperCase().startsWith(query.toUpperCase()) ||
+				user.lastName.toUpperCase().startsWith(query.toUpperCase())
+		);
+		setFilteredData(filtered);
 	};
+
+
+  const handleNameSubmit = (value: string) => {
+    setSelectedCity(value)
+  };
 
 	return (
 		<div className="data_field">
@@ -82,7 +88,7 @@ function UserData() {
 							</div>
 						</div>
 
-						<Dropdown data={data} />
+						<Dropdown data={data} handleNameSubmit={handleNameSubmit} />
 
 						<div className="clear">
 							<MdOutlineDeleteOutline />
@@ -107,18 +113,24 @@ function UserData() {
 				</div>
 				{!loading ? (
 					<table id="customers">
-						<tr>
-							<th>Name</th>
-							<th>City</th>
-							<th>Birthday</th>
-						</tr>
-						{filteredData.slice(0, 10).map((itm) => (
-							<tr key={itm.id}>
-								<td>{itm.firstName + ' ' + itm.lastName}</td>
-								<td>{itm.address.city}</td>
-								<td>{itm.birthDate}</td>
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>City</th>
+								<th>Birthday</th>
 							</tr>
-						))}
+						</thead>
+						<tbody>
+							{filteredData.slice(0, 10).map((itm) => (
+								<tr key={itm.id}>
+									<td>
+										{itm.firstName + ' ' + itm.lastName}
+									</td>
+									<td>{itm.address.city}</td>
+									<td>{itm.birthDate}</td>
+								</tr>
+							))}
+						</tbody>
 					</table>
 				) : (
 					<p>Loading data ..</p>
@@ -132,6 +144,6 @@ function UserData() {
 			</div>
 		</div>
 	);
-}
+};
 
 export default UserData;
