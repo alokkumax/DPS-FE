@@ -22,10 +22,10 @@ const Dropdown: React.FC<DropdownProps> = ({ data, id , handleNameSubmit}) => {
 
 	return (
 		<div className={`dropdown ${open ? 'dropdown-active' : ''}`}>
-			<div onClick={() => setOpen(!open)} className="dropbtn">
+			<button onClick={() => setOpen(!open)} className="dropbtn">
 				{selectedCity == '' ? 'Select city' : selectedCity}{' '}
 				{open ? <IoIosArrowDown /> : <IoIosArrowUp />}
-			</div>
+			</button>
 			<div
 				className={`dropdown-content ${
 					open ? 'dropdown-content-active' : ''
