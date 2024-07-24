@@ -96,13 +96,13 @@ const UserData: React.FC = () => {
 	const handleClear = () => {
 		setQuery('');
 		setSelectedCity('');
-		setCurrentPage(1)
-		
+		setCurrentPage(1);
 	};
 
 	const paginate = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
 	};
+
 	return (
 		<div className="data_field">
 			<div>
@@ -122,25 +122,23 @@ const UserData: React.FC = () => {
 								/>
 							</div>
 						</div>
+						<div className="mobile">
+							<Dropdown
+								data={data}
+								handleNameSubmit={handleNameSubmit}
+								selectedCity={selectedCity}
+							/>
 
-						<Dropdown
-							data={data}
-							handleNameSubmit={handleNameSubmit}
-							selectedCity = {selectedCity}
-						/>
-
-						<button className="clear" onClick={handleClear}>
-							<MdOutlineDeleteOutline />
-						</button>
+							<div className="clear" onClick={handleClear}>
+								<MdOutlineDeleteOutline />
+							</div>
+						</div>
 					</div>
-					<div className="checkbox">
+					<div className="checkbox" onClick={handleChecked}>
 						<p>
 							Highlight oldest per city{' '}
 							{checked ? (
-								<RiCheckboxCircleLine
-									className="radio"
-									onClick={handleChecked}
-								/>
+								<RiCheckboxCircleLine className="radio" />
 							) : (
 								<RiCheckboxBlankCircleLine
 									className="radio"
@@ -178,7 +176,6 @@ const UserData: React.FC = () => {
 					<p>Loading data ..</p>
 				)}
 			</div>
-
 			<Pagination
 				currentPage={currentPage}
 				paginate={paginate}
