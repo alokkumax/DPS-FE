@@ -28,7 +28,6 @@ const Pagination: React.FC<PaginationProps> = ({
 						className={currentPage == num ? 'active' : ''}
 					>
 						<a
-							href="!#"
 							style={{ color: 'black', textDecoration: 'none' }}
 						>
 							{num}
