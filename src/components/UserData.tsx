@@ -6,6 +6,7 @@ import {
 	RiCheckboxCircleLine,
 } from 'react-icons/ri';
 import Dropdown from './Dropdown';
+import Pagination from './Pagination';
 
 const UserData: React.FC = () => {
 	const [data, setData] = useState<any[]>([]);
@@ -15,6 +16,9 @@ const UserData: React.FC = () => {
 	const [filteredData, setFilteredData] = useState<any[]>([]);
 	const [checked, setChecked] = useState<boolean>(false);
 	const [selectedCity, setSelectedCity] = useState<string>('');
+
+	const [currentPage, setCurrentPage] = useState(1);
+	const [postPerPage] = useState(10);
 
 	const handleChecked = () => {
 		setChecked(!checked);
@@ -71,6 +75,13 @@ const UserData: React.FC = () => {
 		setQuery('');
 		setSelectedCity('');
 	};
+
+	const indexOfLastUser = currentPage * postPerPage;
+	const indexOfFirstUser = indexOfLastUser - postPerPage;
+	const currentUser = filteredData.slice(indexOfFirstUser, indexOfLastUser);
+
+	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
 	return (
 		<div className="data_field">
 			<div>
@@ -126,7 +137,7 @@ const UserData: React.FC = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{filteredData.slice(0, 10).map((itm) => (
+							{currentUser.map((itm) => (
 								<tr
 									key={itm.id}
 									className={checked ? 'lighted' : ''}
@@ -145,11 +156,12 @@ const UserData: React.FC = () => {
 				)}
 			</div>
 
-			<div className="pagination">
-				<button className="active">1</button>
-				<button>2</button>
-				<button>3</button>
-			</div>
+			<Pagination
+				currentPage={currentPage}
+				paginate={paginate}
+				postPerPage={postPerPage}
+				totalPosts={filteredData.length}
+			/>
 		</div>
 	);
 };
