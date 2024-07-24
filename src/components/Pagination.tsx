@@ -27,9 +27,7 @@ const Pagination: React.FC<PaginationProps> = ({
 						onClick={() => paginate(num)}
 						className={currentPage == num ? 'active' : ''}
 					>
-						<a
-							style={{ color: 'black', textDecoration: 'none' }}
-						>
+						<a style={{ color: 'black', textDecoration: 'none' }}>
 							{num}
 						</a>
 					</button>

@@ -45,44 +45,64 @@ const UserData: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		setFilteredData(data);
-	}, [data]);
+		getCurrentData();
+	}, [data, currentPage]);
 
 	useEffect(() => {
-		if (query.length > 0) {
-			getFilteredItems(query, data);
-		} else {
-			setFilteredData(data);
-		}
-	}, [query]);
+		getFilteredItems();
+	}, [query, selectedCity]);
 
-	const getFilteredItems = (query: string, data: any[]) => {
-		if (!query) {
-			setFilteredData(data);
+	const getCurrentData = () => {
+		const indexOfLastUser = currentPage * postPerPage;
+		const indexOfFirstUser = indexOfLastUser - postPerPage;
+		const currentUser = data.slice(indexOfFirstUser, indexOfLastUser);
+		setFilteredData(currentUser);
+	};
+	const getFilteredItems = () => {
+		if (!query && !selectedCity) {
+			getCurrentData();
+		} else if (selectedCity && !query) {
+			const filtered = data.filter(
+				(user) => user.address.city == selectedCity
+			);
+			setFilteredData(filtered);
+		} else if (query && !selectedCity) {
+			const filtered = data.filter(
+				(user) =>
+					user.firstName
+						.toUpperCase()
+						.startsWith(query.toUpperCase()) ||
+					user.lastName.toUpperCase().startsWith(query.toUpperCase())
+			);
+			setFilteredData(filtered);
+		} else {
+			const filtered = data.filter(
+				(user) =>
+					user.address.city == selectedCity &&
+					(user.firstName
+						.toUpperCase()
+						.startsWith(query.toUpperCase()) ||
+						user.lastName
+							.toUpperCase()
+							.startsWith(query.toUpperCase()))
+			);
+			setFilteredData(filtered);
 		}
-		const filtered = data.filter(
-			(user) =>
-				user.firstName.toUpperCase().startsWith(query.toUpperCase()) ||
-				user.lastName.toUpperCase().startsWith(query.toUpperCase())
-		);
-		setFilteredData(filtered);
 	};
 
 	const handleNameSubmit = (value: string) => {
 		setSelectedCity(value);
-		console.log(selectedCity)
 	};
 	const handleClear = () => {
 		setQuery('');
 		setSelectedCity('');
+		setCurrentPage(1)
+		
 	};
 
-	const indexOfLastUser = currentPage * postPerPage;
-	const indexOfFirstUser = indexOfLastUser - postPerPage;
-	const currentUser = filteredData.slice(indexOfFirstUser, indexOfLastUser);
-
-	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
+	const paginate = (pageNumber: number) => {
+		setCurrentPage(pageNumber);
+	};
 	return (
 		<div className="data_field">
 			<div>
@@ -92,6 +112,7 @@ const UserData: React.FC = () => {
 							<div className="search">
 								<IoSearch color="gray" />
 								<input
+									value={query}
 									type="text"
 									className="input"
 									placeholder="Search username"
@@ -105,6 +126,7 @@ const UserData: React.FC = () => {
 						<Dropdown
 							data={data}
 							handleNameSubmit={handleNameSubmit}
+							selectedCity = {selectedCity}
 						/>
 
 						<button className="clear" onClick={handleClear}>
@@ -113,7 +135,7 @@ const UserData: React.FC = () => {
 					</div>
 					<div className="checkbox">
 						<p>
-							Highlight seniors of the cities{' '}
+							Highlight oldest per city{' '}
 							{checked ? (
 								<RiCheckboxCircleLine
 									className="radio"
@@ -138,7 +160,7 @@ const UserData: React.FC = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{currentUser.map((itm) => (
+							{filteredData.map((itm) => (
 								<tr
 									key={itm.id}
 									className={checked ? 'lighted' : ''}
@@ -161,7 +183,9 @@ const UserData: React.FC = () => {
 				currentPage={currentPage}
 				paginate={paginate}
 				postPerPage={postPerPage}
-				totalPosts={filteredData.length}
+				totalPosts={
+					query || selectedCity ? filteredData.length : data.length
+				}
 			/>
 		</div>
 	);

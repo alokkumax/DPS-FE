@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { AiOutlineSearch } from 'react-icons/ai';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
 interface User {
@@ -12,17 +11,21 @@ interface User {
 interface DropdownProps {
 	data: User[];
 	handleNameSubmit: (value: string) => void;
+	selectedCity: string;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ data , handleNameSubmit}) => {
-	const [selectedCity, setSelectedCity] = useState<string>('');
+const Dropdown: React.FC<DropdownProps> = ({
+	data,
+	handleNameSubmit,
+	selectedCity,
+}) => {
 	const [open, setOpen] = useState<boolean>(false);
-
+	console.log(selectedCity);
 
 	return (
 		<div className={`dropdown ${open ? 'dropdown-active' : ''}`}>
 			<button onClick={() => setOpen(!open)} className="dropbtn">
-				{selectedCity == '' ? 'Select city' : selectedCity}{' '}
+				{selectedCity === '' ? 'Select city' : selectedCity}{' '}
 				{open ? <IoIosArrowDown /> : <IoIosArrowUp />}
 			</button>
 			<div
@@ -35,8 +38,7 @@ const Dropdown: React.FC<DropdownProps> = ({ data , handleNameSubmit}) => {
 						key={itm.id}
 						onClick={() => {
 							setOpen(false);
-							setSelectedCity(itm.address.city);
-							handleNameSubmit(itm.address.city)
+							handleNameSubmit(itm.address.city);
 						}}
 					>
 						{itm.address.city}
