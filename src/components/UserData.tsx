@@ -7,6 +7,7 @@ import {
 } from 'react-icons/ri';
 import Dropdown from './Dropdown';
 import Pagination from './Pagination';
+import Modal from './Modal';
 
 const UserData: React.FC = () => {
 	const [data, setData] = useState<any[]>([]);
@@ -19,6 +20,9 @@ const UserData: React.FC = () => {
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [postPerPage] = useState(10);
+
+	const [open, setOpen] = useState<boolean>(false);
+	const [selectedUser, setSelectedUser] = useState<object>({});
 
 	const handleChecked = () => {
 		setChecked(!checked);
@@ -162,6 +166,10 @@ const UserData: React.FC = () => {
 								<tr
 									key={itm.id}
 									className={checked ? 'lighted' : ''}
+									onClick={() => {
+										setOpen(true);
+										setSelectedUser(itm);
+									}}
 								>
 									<td>
 										{itm.firstName + ' ' + itm.lastName}
@@ -183,6 +191,11 @@ const UserData: React.FC = () => {
 				totalPosts={
 					query || selectedCity ? filteredData.length : data.length
 				}
+			/>
+			<Modal
+				open={open}
+				onClose={() => setOpen(false)}
+				selectedUser={selectedUser}
 			/>
 		</div>
 	);

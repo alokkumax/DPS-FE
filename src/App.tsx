@@ -8,7 +8,7 @@ function App() {
 		<>
 			<div className='header'>
 				<img className='dps' src={dpsLogo} alt="" />
-				<p className='brand'>Dashboard</p>
+				<p className='brand'>CRM Dashboard</p>
 			</div>
 			<UserData/>
 		</>
