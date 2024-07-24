@@ -11,11 +11,10 @@ interface User {
 
 interface DropdownProps {
 	data: User[];
-	id?: number;
 	handleNameSubmit: (value: string) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ data, id , handleNameSubmit}) => {
+const Dropdown: React.FC<DropdownProps> = ({ data , handleNameSubmit}) => {
 	const [selectedCity, setSelectedCity] = useState<string>('');
 	const [open, setOpen] = useState<boolean>(false);
 

@@ -70,6 +70,7 @@ const UserData: React.FC = () => {
 
 	const handleNameSubmit = (value: string) => {
 		setSelectedCity(value);
+		console.log(selectedCity)
 	};
 	const handleClear = () => {
 		setQuery('');
