@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
-import {
-	RiCheckboxBlankCircleLine,
-	RiCheckboxCircleLine,
-} from 'react-icons/ri';
+import { MdCheckBoxOutlineBlank } from 'react-icons/md';
+import { MdCheckBox } from 'react-icons/md';
+import emptyPng from '../assets/empty.png';
 import Dropdown from './Dropdown';
 import Pagination from './Pagination';
 import Modal from './Modal';
@@ -106,6 +105,14 @@ const UserData: React.FC = () => {
 	const paginate = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
 	};
+	const EmptyData = () => {
+		return (
+			<div className="emptyData">
+				<img src={emptyPng} alt="" />
+				<p>No Data Found</p>
+			</div>
+		);
+	};
 
 	return (
 		<div className="data_field">
@@ -139,50 +146,53 @@ const UserData: React.FC = () => {
 						</div>
 					</div>
 					<div className="checkbox" onClick={handleChecked}>
-						<p>
-							Highlight oldest per city{' '}
-							{checked ? (
-								<RiCheckboxCircleLine className="radio" />
-							) : (
-								<RiCheckboxBlankCircleLine
-									className="radio"
-									onClick={handleChecked}
-								/>
-							)}
-						</p>
+						<p>Highlight oldest per city </p>
+						{checked ? (
+							<MdCheckBox
+								className="radio filled-radio"
+								onClick={handleChecked}
+							/>
+						) : (
+							<MdCheckBoxOutlineBlank className="radio" />
+						)}
 					</div>
 				</div>
-				{!loading ? (
-					<table id="customers">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>City</th>
-								<th>Birthday</th>
-							</tr>
-						</thead>
-						<tbody>
-							{filteredData.map((itm) => (
-								<tr
-									key={itm.id}
-									className={checked ? 'lighted' : ''}
-									onClick={() => {
-										setOpen(true);
-										setSelectedUser(itm);
-									}}
-								>
-									<td>
-										{itm.firstName + ' ' + itm.lastName}
-									</td>
-									<td>{itm.address.city}</td>
-									<td>{itm.birthDate}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				) : (
-					<p>Loading data ..</p>
-				)}
+				{
+					filteredData.length === 0 ? <EmptyData/> : (
+						!loading ? (
+							<table id="customers">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>City</th>
+										<th>Birthday</th>
+									</tr>
+								</thead>
+								<tbody>
+									{filteredData.map((itm) => (
+										<tr
+											key={itm.id}
+											className={checked ? 'lighted' : ''}
+											onClick={() => {
+												setOpen(true);
+												setSelectedUser(itm);
+											}}
+										>
+											<td>
+												{itm.firstName + ' ' + itm.lastName}
+											</td>
+											<td>{itm.address.city}</td>
+											<td>{itm.birthDate}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						) : (
+							<p>Loading data ..</p>
+						)
+					)
+				}
+				
 			</div>
 			<Pagination
 				currentPage={currentPage}
