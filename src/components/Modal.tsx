@@ -5,6 +5,7 @@ interface UserPropType {
 	username: string;
 	image: string;
 	age: number;
+
 	company: CompanyPropType;
 }
 interface CompanyPropType {
@@ -46,42 +47,42 @@ const Modal: React.FC<propType> = ({ open, onClose, selectedUser }) => {
 	const handleToggle = (id: number) => {
 		setToggle(id);
 	};
-	interface UserPropType {
-		firstName: string;
-		lastName: string;
-		username: string;
-		image: string;
-		company: CompanyPropType;
-	}
-	interface WorkPlacePropType{
-		user : UserPropType
-	}
-	const WorkPlace:React.FC<WorkPlacePropType> = ({user}) => {
-		return (
-			<div className="workplace">
-				<table>
-					<tr>
-						<td>Company</td>
-						{/* <td className="data">{user.company.department}</td> */}
-					</tr>
-					<tr>
-						<td>Address</td>
-						{/* <td className="data">
-							{selectedUser.company.address.address +
-								', ' +
-								selectedUser.company.address.city +
-								', ' +
-								selectedUser.company.address.state}
-						</td> */}
-					</tr>
-					<tr>
-						<td>Designation</td>
-						{/* <td className="data">{selectedUser.company.title}</td> */}
-					</tr>
-				</table>
-			</div>
-		);
-	};
+	// interface UserPropType {
+	// 	firstName: string;
+	// 	lastName: string;
+	// 	username: string;
+	// 	image: string;
+	// 	company: CompanyPropType;
+	// }
+	// interface WorkPlacePropType{
+	// 	user : UserPropType
+	// }
+	// const WorkPlace:React.FC<WorkPlacePropType> = ({user}) => {
+	// 	return (
+	// 		<div className="workplace">
+	// 			<table>
+	// 				<tr>
+	// 					<td>Company</td>
+	// 					{/* <td className="data">{user.company.department}</td> */}
+	// 				</tr>
+	// 				<tr>
+	// 					<td>Address</td>
+	// 					{/* <td className="data">
+	// 						{selectedUser.company.address.address +
+	// 							', ' +
+	// 							selectedUser.company.address.city +
+	// 							', ' +
+	// 							selectedUser.company.address.state}
+	// 					</td> */}
+	// 				</tr>
+	// 				<tr>
+	// 					<td>Designation</td>
+	// 					{/* <td className="data">{selectedUser.company.title}</td> */}
+	// 				</tr>
+	// 			</table>
+	// 		</div>
+	// 	);
+	// };
 	// console.log(selectedUser.company);
 	return (
 		<div
@@ -122,7 +123,7 @@ const Modal: React.FC<propType> = ({ open, onClose, selectedUser }) => {
 							</li>
 						))}
 					</ul>
-					{toggle === 0 ? <WorkPlace user = {selectedUser} /> : ''}
+					{/* {toggle === 0 ? <WorkPlace user = {selectedUser} /> : ''} */}
 				</div>
 			</div>
 		</div>
