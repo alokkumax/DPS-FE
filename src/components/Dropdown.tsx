@@ -20,19 +20,16 @@ const Dropdown: React.FC<DropdownProps> = ({
 	selectedCity,
 }) => {
 	const [open, setOpen] = useState<boolean>(false);
-	console.log(selectedCity);
 
-	let cts: string[] = [];
-	data.map((itm) => cts.push(itm.address.city));
-	console.log(cts);
+	let cities: string[] = [];
+	data.map((itm) => cities.push(itm.address.city));
 
-	let uniq: string[] = [];
-	cts.forEach((element) => {
-		if (!uniq.includes(element)) {
-			uniq.push(element);
+	let uniqCities: string[] = [];
+	cities.forEach((element) => {
+		if (!uniqCities.includes(element)) {
+			uniqCities.push(element);
 		}
 	});
-	console.log(uniq);
 
 	return (
 		<div className={`dropdown ${open ? 'dropdown-active' : ''}`}>
@@ -45,7 +42,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 					open ? 'dropdown-content-active' : ''
 				}`}
 			>
-				{uniq.sort().map((itm, index) => (
+				{uniqCities.sort().map((itm, index) => (
 					<li
 						key={index}
 						onClick={() => {

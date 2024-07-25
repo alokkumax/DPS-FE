@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
-interface userObj {
+interface UserPropType {
 	firstName: string;
 	lastName: string;
 	username: string;
-	company: {
-		name: string;
-		title: string;
-		address: {
-			address: string;
-			city: string;
-			state: string;
-		};
+	image: string;
+	age: number;
+	company: CompanyPropType;
+}
+interface CompanyPropType {
+	name: string;
+	department: string;
+	title: string;
+	address: {
+		address: string;
+		city: string;
+		state: string;
 	};
-	// image:File
 }
 interface propType {
 	open: boolean;
 	onClose: () => void;
-	selectedUser: userObj;
+	selectedUser: UserPropType;
 }
 
 const Modal: React.FC<propType> = ({ open, onClose, selectedUser }) => {
@@ -43,13 +46,23 @@ const Modal: React.FC<propType> = ({ open, onClose, selectedUser }) => {
 	const handleToggle = (id: number) => {
 		setToggle(id);
 	};
-	const WorkPlace = () => {
+	interface UserPropType {
+		firstName: string;
+		lastName: string;
+		username: string;
+		image: string;
+		company: CompanyPropType;
+	}
+	interface WorkPlacePropType{
+		user : UserPropType
+	}
+	const WorkPlace:React.FC<WorkPlacePropType> = ({user}) => {
 		return (
 			<div className="workplace">
 				<table>
 					<tr>
 						<td>Company</td>
-						{/* <td className="data">{selectedUser.company.name}</td> */}
+						{/* <td className="data">{user.company.department}</td> */}
 					</tr>
 					<tr>
 						<td>Address</td>
@@ -69,6 +82,7 @@ const Modal: React.FC<propType> = ({ open, onClose, selectedUser }) => {
 			</div>
 		);
 	};
+	// console.log(selectedUser.company);
 	return (
 		<div
 			onClick={onClose}
@@ -91,6 +105,7 @@ const Modal: React.FC<propType> = ({ open, onClose, selectedUser }) => {
 								selectedUser.lastName}
 						</h1>
 						<p>@{selectedUser.username}</p>
+						<p>{selectedUser.age + " years old"}</p>
 					</div>
 				</div>
 				<div className="tabs">
@@ -107,7 +122,7 @@ const Modal: React.FC<propType> = ({ open, onClose, selectedUser }) => {
 							</li>
 						))}
 					</ul>
-					{toggle === 0 ? <WorkPlace /> : ''}
+					{toggle === 0 ? <WorkPlace user = {selectedUser} /> : ''}
 				</div>
 			</div>
 		</div>

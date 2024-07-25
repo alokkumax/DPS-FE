@@ -21,7 +21,7 @@ const UserData: React.FC = () => {
 	const [postPerPage] = useState(10);
 
 	const [open, setOpen] = useState<boolean>(false);
-	const [selectedUser, setSelectedUser] = useState<object>({});
+	const [selectedUser, setSelectedUser] = useState<any>({});
 
 	const handleChecked = () => {
 		setChecked(!checked);
@@ -35,7 +35,6 @@ const UserData: React.FC = () => {
 			}
 			const res = await response.json();
 			setData(res.users);
-			console.log('tap');
 		} catch (error) {
 			// setError(error as Error);
 		} finally {
@@ -49,11 +48,33 @@ const UserData: React.FC = () => {
 
 	useEffect(() => {
 		getCurrentData();
+		// getOldestUser()
 	}, [data, currentPage]);
 
 	useEffect(() => {
 		getFilteredItems();
 	}, [query, selectedCity]);
+
+	// const getOldestUser = () => {
+	// 	data.map(i => {
+	// 		let oldest = i;
+	// 		data.map(j=>{
+	// 			if(oldest.address.city === j.address.city){
+	// 				oldest = oldestUser(oldest,j)
+	// 			}
+	// 		})
+	// 		oldest.x = true
+	// 	})
+	// }
+	// const oldestUser = (i:any,j:any) => {
+	// 	if(i.age > j.age){
+	// 		return i;
+	// 	}else {
+	// 		return j
+	// 	}
+	// }
+
+	// console.log(data)
 
 	const getCurrentData = () => {
 		const indexOfLastUser = currentPage * postPerPage;
@@ -113,7 +134,7 @@ const UserData: React.FC = () => {
 			</div>
 		);
 	};
-
+	console.log(selectedUser);
 	return (
 		<div className="data_field">
 			<div>
@@ -157,42 +178,39 @@ const UserData: React.FC = () => {
 						)}
 					</div>
 				</div>
-				{
-					filteredData.length === 0 ? <EmptyData/> : (
-						!loading ? (
-							<table id="customers">
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>City</th>
-										<th>Birthday</th>
-									</tr>
-								</thead>
-								<tbody>
-									{filteredData.map((itm) => (
-										<tr
-											key={itm.id}
-											className={checked ? 'lighted' : ''}
-											onClick={() => {
-												setOpen(true);
-												setSelectedUser(itm);
-											}}
-										>
-											<td>
-												{itm.firstName + ' ' + itm.lastName}
-											</td>
-											<td>{itm.address.city}</td>
-											<td>{itm.birthDate}</td>
-										</tr>
-									))}
-								</tbody>
-							</table>
-						) : (
-							<p>Loading data ..</p>
-						)
-					)
-				}
-				
+				{filteredData.length === 0 ? (
+					<EmptyData />
+				) : !loading ? (
+					<table id="customers">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>City</th>
+								<th>Birthday</th>
+							</tr>
+						</thead>
+						<tbody>
+							{filteredData.map((itm) => (
+								<tr
+									key={itm.id}
+									className={checked ? 'lighted' : ''}
+									onClick={() => {
+										setOpen(true);
+										setSelectedUser(itm);
+									}}
+								>
+									<td>
+										{itm.firstName + ' ' + itm.lastName}
+									</td>
+									<td>{itm.address.city}</td>
+									<td>{itm.birthDate}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				) : (
+					<p>Loading data ..</p>
+				)}
 			</div>
 			<Pagination
 				currentPage={currentPage}
