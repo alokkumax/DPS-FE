@@ -378,6 +378,13 @@ td {
 		width: 85%;
 	}
 }
+@media (max-width: 559px) {
+	.data_field {
+		width: 90%;
+		gap:2rem;
+		height: auto;
+	}
+}
 @media (max-width: 529px) {
 	.filter_btns {
 		flex-direction: column;
@@ -405,7 +412,7 @@ td {
 	}
 	.data_field {
 		width: 90%;
-		gap:12rem;
+		gap:2rem;
 		height: auto;
 	}
 	.header {
