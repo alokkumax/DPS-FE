@@ -24,6 +24,7 @@ const UserData: React.FC = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<any>({});
 	const [oldestUsers, setOldestUsers] = useState<any>({});
+	const[searchQuery, setSearchQuery ] = useState<string>('')
 
 	const handleChecked = () => {
 		setChecked(!checked);
@@ -104,11 +105,11 @@ const UserData: React.FC = () => {
 						.startsWith(query.toUpperCase()) ||
 					user.lastName.toUpperCase().startsWith(query.toUpperCase())
 			);
-			setTimeout(()=>{
-				setLoading(false)
+			// setTimeout(()=>{
+			// 	setLoading(false)
 				setFilteredData(filtered);
-			},1000)
-			setLoading(true)
+			// },1000)
+			// setLoading(true)
 		} else {
 			const filtered = data.filter(
 				(user) =>
@@ -129,6 +130,7 @@ const UserData: React.FC = () => {
 	};
 	const handleClear = () => {
 		setQuery('');
+		setSearchQuery("")
 		setSelectedCity('');
 		setCurrentPage(1);
 	};
@@ -152,6 +154,34 @@ const UserData: React.FC = () => {
 			</div>
 		);
 	};
+	const handleDelayInput = (e:any) => {
+		const x =  e.target.value;
+		setSearchQuery(x)
+		setTimeout(()=>{
+			setLoading(false)
+			setQuery(x)
+		},1000)
+		setLoading(true)
+	}
+
+	// let lastChangeTime = 0;
+
+    // function handleDelayInput(event:any) {
+    //   const now = Date.now();
+    //   const timeSinceLastChange = now - lastChangeTime;
+
+    //   if (timeSinceLastChange >= 1000) {
+    //     // Update the last change time
+    //     lastChangeTime = now;
+    //     const value = event.target.value;
+    //     console.log(`Value after delay: ${value}`);
+    //     // Update your state or perform the required action with the value
+	// 	setQuery(value)
+    //   } else {
+    //     // Prevent the input from updating if less than 1 second has passed
+    //     event.target.value = event.target.value.slice(0, -1);
+    //   }
+    // }
 
 	return (
 		<div className="data_field">
@@ -162,14 +192,12 @@ const UserData: React.FC = () => {
 							<div className="search">
 								<IoSearch color="gray" />
 								<input
-									disabled={loading}
-									value={query}
+									// disabled={loading}
+									value={searchQuery}
 									type="text"
 									className="input"
 									placeholder="Search username"
-									onChange={(e) => {
-										setQuery(e.target.value);
-									}}
+									onChange={(e) => handleDelayInput(e)}
 								/>
 							</div>
 						</div>

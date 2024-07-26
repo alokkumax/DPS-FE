@@ -295,9 +295,9 @@
 	background-color: white;
 	border-radius: 12px;
 	box-shadow: #f5f5f5;
-	padding: 2rem 3rem;
+	padding: 2rem 2rem;
 	max-width: fit-content;
-	/* width: 400px; */
+	width: 450px;
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -314,19 +314,33 @@
 	display: flex;
 	flex-direction: row;
 	align-items: start;
+	justify-content: space-between;
 	gap: 1rem;
 }
-.profile-img {
-	width: 80px;
-	height: 80px;
+.profile-top :first-child{
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
 }
-.profile-top div h1 {
+.admin{
+	padding: 3px 6px;
+	border-radius: 6px;
+	color: #c64cff;
+	font-weight: 500;
+	font-family: "Poppins";
+	/* background-color: #c64cff; */
+}
+.profile-img {
+	width: 50px;
+	height: 50px;
+}
+.profile-top div h3 {
 	margin: 0px;
 	font-family: 'Poppins';
 }
 .profile-top div p {
 	margin: 0px;
-	font-size: 17px;
+	font-size: 13px;
 	font-family: 'Poppins';
 }
 .tabs ul {
@@ -351,10 +365,12 @@
 	font-family: 'Poppins';
 	padding: 0px;
 	margin-top: 0px;
+	font-size: 13px;
 }
 .workplace table tr,
 td {
 	border: none;
+	padding: 0px;
 }
 .workplace table td {
 }
@@ -434,6 +450,12 @@ td {
 	}
 	.mobile {
 		justify-content: start;
+	}
+	.modal{
+		width: 300px;
+	}
+	.workplace table td {
+		padding-left: 10px;
 	}
 }
 @media (max-width: 429px) {
