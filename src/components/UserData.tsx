@@ -24,7 +24,6 @@ const UserData: React.FC = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<any>({});
 	const [oldestUsers, setOldestUsers] = useState<any>({});
-	const [searchQuery, setSearchQuery] = useState<string>('');
 
 	const handleChecked = () => {
 		setChecked(!checked);
@@ -129,7 +128,6 @@ const UserData: React.FC = () => {
 	};
 	const handleClear = () => {
 		setQuery('');
-		setSearchQuery('');
 		setSelectedCity('');
 		setCurrentPage(1);
 	};
