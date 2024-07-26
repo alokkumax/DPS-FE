@@ -1,23 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 interface UserPropType {
 	firstName: string;
 	lastName: string;
 	username: string;
 	image: string;
 	age: number;
+	role:string;
+	phone:string;
+	email:string;
+}
 
-	company: CompanyPropType;
-}
-interface CompanyPropType {
-	name: string;
-	department: string;
-	title: string;
-	address: {
-		address: string;
-		city: string;
-		state: string;
-	};
-}
 interface propType {
 	open: boolean;
 	onClose: () => void;
@@ -50,7 +42,6 @@ const Modal: React.FC<propType> = ({ open, onClose, selectedUser }) => {
 								selectedUser.lastName}
 						</h3>
 						<p>@{selectedUser.username}</p>
-						{/* <p>{selectedUser.age + " years old"}</p> */}
 					</div>
 					</div>
 					<div className="admin">
