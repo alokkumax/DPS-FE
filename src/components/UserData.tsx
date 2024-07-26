@@ -24,7 +24,7 @@ const UserData: React.FC = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<any>({});
 	const [oldestUsers, setOldestUsers] = useState<any>({});
-	const[searchQuery, setSearchQuery ] = useState<string>('')
+	const [searchQuery, setSearchQuery] = useState<string>('');
 
 	const handleChecked = () => {
 		setChecked(!checked);
@@ -61,21 +61,24 @@ const UserData: React.FC = () => {
 	const getOldestPerCity = async () => {
 		let oldestPerCity: any = {};
 
-		const checkAge = (i:string,j:string) =>{
+		const checkAge = (i: string, j: string) => {
 			const date1 = new Date(i);
 			const date2 = new Date(j);
-		  
+
 			if (date1 < date2) {
-			  return false;
+				return false;
 			} else if (date1 > date2) {
-			  return true;
+				return true;
 			} else {
-			  return true;
+				return true;
 			}
-		}
+		};
 		data.forEach((user) => {
 			const city = user.address.city;
-			if (!oldestPerCity[city] || checkAge( user.birthDate, oldestPerCity[city].birtbirthDate)) {
+			if (
+				!oldestPerCity[city] ||
+				checkAge(user.birthDate, oldestPerCity[city].birtbirthDate)
+			) {
 				oldestPerCity[city] = user;
 			}
 		});
@@ -105,11 +108,7 @@ const UserData: React.FC = () => {
 						.startsWith(query.toUpperCase()) ||
 					user.lastName.toUpperCase().startsWith(query.toUpperCase())
 			);
-			// setTimeout(()=>{
-			// 	setLoading(false)
-				setFilteredData(filtered);
-			// },1000)
-			// setLoading(true)
+			setFilteredData(filtered);
 		} else {
 			const filtered = data.filter(
 				(user) =>
@@ -130,7 +129,7 @@ const UserData: React.FC = () => {
 	};
 	const handleClear = () => {
 		setQuery('');
-		setSearchQuery("")
+		setSearchQuery('');
 		setSelectedCity('');
 		setCurrentPage(1);
 	};
@@ -150,38 +149,9 @@ const UserData: React.FC = () => {
 		return (
 			<div className="loadingData">
 				<img src={loadingGIF} alt="" />
-				{/* <p>No Data Found</p> */}
 			</div>
 		);
 	};
-	const handleDelayInput = (e:any) => {
-		const x =  e.target.value;
-		setSearchQuery(x)
-		setTimeout(()=>{
-			setLoading(false)
-			setQuery(x)
-		},1000)
-		setLoading(true)
-	}
-
-	// let lastChangeTime = 0;
-
-    // function handleDelayInput(event:any) {
-    //   const now = Date.now();
-    //   const timeSinceLastChange = now - lastChangeTime;
-
-    //   if (timeSinceLastChange >= 1000) {
-    //     // Update the last change time
-    //     lastChangeTime = now;
-    //     const value = event.target.value;
-    //     console.log(`Value after delay: ${value}`);
-    //     // Update your state or perform the required action with the value
-	// 	setQuery(value)
-    //   } else {
-    //     // Prevent the input from updating if less than 1 second has passed
-    //     event.target.value = event.target.value.slice(0, -1);
-    //   }
-    // }
 
 	return (
 		<div className="data_field">
@@ -192,12 +162,17 @@ const UserData: React.FC = () => {
 							<div className="search">
 								<IoSearch color="gray" />
 								<input
-									// disabled={loading}
-									value={searchQuery}
+									value={query}
 									type="text"
 									className="input"
 									placeholder="Search username"
-									onChange={(e) => handleDelayInput(e)}
+									onChange={(e) => {
+										!loading && setQuery(e.target.value);
+										setTimeout(() => {
+											setLoading(false);
+										}, 1000);
+										setLoading(true);
+									}}
 								/>
 							</div>
 						</div>
@@ -240,7 +215,13 @@ const UserData: React.FC = () => {
 							{filteredData.map((itm) => (
 								<tr
 									key={itm.id}
-									className={checked && itm.id === oldestUsers[itm.address.city].id ? 'lighted' : ''}
+									className={
+										checked &&
+										itm.id ===
+											oldestUsers[itm.address.city].id
+											? 'lighted'
+											: ''
+									}
 									onClick={() => {
 										setOpen(true);
 										setSelectedUser(itm);
