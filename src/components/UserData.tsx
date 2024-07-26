@@ -25,6 +25,8 @@ const UserData: React.FC = () => {
 	const [selectedUser, setSelectedUser] = useState<any>({});
 	const [oldestUsers, setOldestUsers] = useState<any>({});
 
+
+
 	const handleChecked = () => {
 		setChecked(!checked);
 	};
@@ -63,25 +65,26 @@ const UserData: React.FC = () => {
 		const checkAge = (i: string, j: string) => {
 			const date1 = new Date(i);
 			const date2 = new Date(j);
-
+			console.log(date1)
+			console.log(date2)
 			if (date1 < date2) {
-				return false;
-			} else if (date1 > date2) {
 				return true;
+			} else if (date1 > date2) {
+				return false;
 			} else {
 				return true;
 			}
+
 		};
 		data.forEach((user) => {
 			const city = user.address.city;
 			if (
 				!oldestPerCity[city] ||
-				checkAge(user.birthDate, oldestPerCity[city].birtbirthDate)
+				checkAge(user.birthDate, oldestPerCity[city].birthDate)
 			) {
 				oldestPerCity[city] = user;
 			}
 		});
-
 		return oldestPerCity;
 	};
 
@@ -163,7 +166,7 @@ const UserData: React.FC = () => {
 									value={query}
 									type="text"
 									className="input"
-									placeholder="Search username"
+									placeholder="Search Name"
 									onChange={(e) => {
 										!loading && setQuery(e.target.value);
 										setTimeout(() => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
 interface User {
@@ -20,7 +20,17 @@ const Dropdown: React.FC<DropdownProps> = ({
 	selectedCity,
 }) => {
 	const [open, setOpen] = useState<boolean>(false);
+	const ref:any = useRef();
 
+	useEffect(()=> {
+		let handler = (e : any) => {
+			let node: any = ref.current;
+			if(node && !node.contains(e.target)){
+				setOpen(false)
+			}
+		}
+		document.addEventListener("mousedown",handler)
+	},[])
 	let cities: string[] = [];
 	data.map((itm) => cities.push(itm.address.city));
 
@@ -32,7 +42,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 	});
 
 	return (
-		<div className={`dropdown ${open ? 'dropdown-active' : ''}`}>
+		<div className={`dropdown ${open ? 'dropdown-active' : ''}`} ref={ref}>
 			<button onClick={() => setOpen(!open)} className="dropbtn">
 				{selectedCity === '' ? 'Select city' : selectedCity}{' '}
 				{open ? <IoIosArrowDown /> : <IoIosArrowUp />}
