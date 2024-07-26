@@ -4,6 +4,7 @@ import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { MdCheckBoxOutlineBlank } from 'react-icons/md';
 import { MdCheckBox } from 'react-icons/md';
 import emptyPng from '../assets/empty.png';
+import loadingGIF from '../assets/loading.gif';
 import Dropdown from './Dropdown';
 import Pagination from './Pagination';
 import Modal from './Modal';
@@ -22,6 +23,7 @@ const UserData: React.FC = () => {
 
 	const [open, setOpen] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<any>({});
+	const [oldestUsers, setOldestUsers] = useState<any>({});
 
 	const handleChecked = () => {
 		setChecked(!checked);
@@ -48,33 +50,37 @@ const UserData: React.FC = () => {
 
 	useEffect(() => {
 		getCurrentData();
-		// getOldestUser()
+		getOldestPerCity().then((result: any) => setOldestUsers(result));
 	}, [data, currentPage]);
 
 	useEffect(() => {
 		getFilteredItems();
 	}, [query, selectedCity]);
 
-	// const getOldestUser = () => {
-	// 	data.map(i => {
-	// 		let oldest = i;
-	// 		data.map(j=>{
-	// 			if(oldest.address.city === j.address.city){
-	// 				oldest = oldestUser(oldest,j)
-	// 			}
-	// 		})
-	// 		oldest.x = true
-	// 	})
-	// }
-	// const oldestUser = (i:any,j:any) => {
-	// 	if(i.age > j.age){
-	// 		return i;
-	// 	}else {
-	// 		return j
-	// 	}
-	// }
+	const getOldestPerCity = async () => {
+		let oldestPerCity: any = {};
 
-	// console.log(data)
+		const checkAge = (i:string,j:string) =>{
+			const date1 = new Date(i);
+			const date2 = new Date(j);
+		  
+			if (date1 < date2) {
+			  return false;
+			} else if (date1 > date2) {
+			  return true;
+			} else {
+			  return true;
+			}
+		}
+		data.forEach((user) => {
+			const city = user.address.city;
+			if (!oldestPerCity[city] || checkAge( user.birthDate, oldestPerCity[city].birtbirthDate)) {
+				oldestPerCity[city] = user;
+			}
+		});
+
+		return oldestPerCity;
+	};
 
 	const getCurrentData = () => {
 		const indexOfLastUser = currentPage * postPerPage;
@@ -98,7 +104,11 @@ const UserData: React.FC = () => {
 						.startsWith(query.toUpperCase()) ||
 					user.lastName.toUpperCase().startsWith(query.toUpperCase())
 			);
-			setFilteredData(filtered);
+			setTimeout(()=>{
+				setLoading(false)
+				setFilteredData(filtered);
+			},1000)
+			setLoading(true)
 		} else {
 			const filtered = data.filter(
 				(user) =>
@@ -134,7 +144,15 @@ const UserData: React.FC = () => {
 			</div>
 		);
 	};
-	console.log(selectedUser);
+	const Loading = () => {
+		return (
+			<div className="loadingData">
+				<img src={loadingGIF} alt="" />
+				{/* <p>No Data Found</p> */}
+			</div>
+		);
+	};
+
 	return (
 		<div className="data_field">
 			<div>
@@ -144,6 +162,7 @@ const UserData: React.FC = () => {
 							<div className="search">
 								<IoSearch color="gray" />
 								<input
+									disabled={loading}
 									value={query}
 									type="text"
 									className="input"
@@ -193,7 +212,7 @@ const UserData: React.FC = () => {
 							{filteredData.map((itm) => (
 								<tr
 									key={itm.id}
-									className={checked ? 'lighted' : ''}
+									className={checked && itm.id === oldestUsers[itm.address.city].id ? 'lighted' : ''}
 									onClick={() => {
 										setOpen(true);
 										setSelectedUser(itm);
@@ -209,7 +228,7 @@ const UserData: React.FC = () => {
 						</tbody>
 					</table>
 				) : (
-					<p>Loading data ..</p>
+					<Loading />
 				)}
 			</div>
 			<Pagination
