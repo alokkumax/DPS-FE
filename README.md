@@ -1,8 +1,40 @@
-# DPS Frontend Coding Challenge
+# DPS Frontend Coding Challenge - Complete !
+Deployed live link - https://crm-dash.netlify.app/
 
-## Overview
+## Project Overview 
 
-This repository contains a very basic web application based on Typescript and React. Main application file is `App.tsx`. Node and npm are required.
+A CRM (Customer Relationship Management) software with clean UI and efficient features. It aims for better performace and clean coding practices.🧑‍💻
+
+### List of features :
+
+-   Client-side Filtering:
+
+    -   **Name Filter:** An input field that dynamically filters by `firstName` or `lastName` as you type.
+    -   **City Filter:** A dropdown that lists all cities present in the data in ascending order. Users can select a city to filter the list accordingly.
+    -   **Highlight Feature:** A checkbox when checked highlights the oldest users within each city.
+
+-   Extra Features Added ⭐
+  
+    -   **1 sec Debounce:** This optimization helps to reduce the number of processing calls, enhancing performance.
+    -   **Modal View:** A Modal/Popup appears when any user is clicked, to accesss more information about the specific user.
+    -   **Pagination:** Pagination helps to divide list of large data into managable data, giving user a seamless experience.
+    -   **Reset:** A reset/delete button when pressed resets the input ( name query, selected city ) from user.
+    -   **Fully Ressponsive UI:** A fully responsive view for mobile, tablet screen sizes.
+
+
+![Screenshot 2024-07-26 175143](https://github.com/user-attachments/assets/4cf91d4d-9f40-49d4-808e-12590328c60f)
+
+
+### Lighthouse Score: 97%
+
+
+![Untitled design](https://github.com/user-attachments/assets/20fee309-50c9-4c5b-928e-e0165f921363)
+
+## Build With
+
+```
+[ TypeScript, Vite, React ]
+```
 
 ## Environment Setup
 
@@ -16,29 +48,10 @@ npm run dev
 
 The application will then be accessible at http://localhost:3000.
 
-## Project Context
+## Contact Me ❤️
 
-You will be enhancing a new CRM (Customer Relationship Management) software aimed at managing customer data efficiently. Your task is to develop a feature that displays a searchable list of customers.
+```
+alokkumax1@gmail.com
+```
 
-Refer to the attached mockup image to guide your UI development 👇
-
-![Mockup](images/mockup.png)
-
-## Challenge Tasks
-
--   **Fork this project:** Start by forking this repository
--   **UI Implementation:** Implement the user interface according to the provided design mockup.
--   **Data Integration:** Utilize the endpoint https://dummyjson.com/users to fetch user data. If no filter is applied all data is displayed.
--   **Client-side Filtering:** Implement the following filters:
-    -   **Name Filter:** An input field that dynamically filters by `firstName` or `lastName` as you type.
-    -   **City Filter:** A dropdown that lists all cities present in the data. Users can select a city to filter the list accordingly.
-    -   **Highlight Feature:** A checkbox that when checked, highlights the oldest users within each city (use data field `city`)
-    -   **Optional:** Implement a 1-second debounce on the Name Filter input. This means the application should delay the filter action until 1 second has passed without any further input from the user. This optimization helps reduce the number of processing calls, enhancing performance.
--   **Submission:** After completing the challenge, email us the URL of your GitHub repository.
--   **Further information:**
-    -   If there is anything unclear regarding requirements, contact us by replying to our email.
-    -   Use small commits, we want to see your progress towards the solution.
-    -   Code clean and follow the best practices.
-
-\
-Happy coding!
+Thank You!
