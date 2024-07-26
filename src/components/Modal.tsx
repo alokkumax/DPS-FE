@@ -18,7 +18,6 @@ interface propType {
 
 const Modal: React.FC<propType> = ({ open, onClose, selectedUser }) => {
 
-
 	return (
 		<div
 			onClick={onClose}

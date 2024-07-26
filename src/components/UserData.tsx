@@ -8,11 +8,9 @@ import loadingGIF from '../assets/loading.gif';
 import Dropdown from './Dropdown';
 import Pagination from './Pagination';
 import Modal from './Modal';
-
 const UserData: React.FC = () => {
 	const [data, setData] = useState<any[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
-	// const [error, setError] = useState<Error | null>(null);
 	const [query, setQuery] = useState<string>('');
 	const [filteredData, setFilteredData] = useState<any[]>([]);
 	const [checked, setChecked] = useState<boolean>(false);
@@ -25,12 +23,11 @@ const UserData: React.FC = () => {
 	const [selectedUser, setSelectedUser] = useState<any>({});
 	const [oldestUsers, setOldestUsers] = useState<any>({});
 
-
-
 	const handleChecked = () => {
 		setChecked(!checked);
 	};
 
+	// function for data fetch from END POINT
 	const fetchData = async () => {
 		try {
 			const response = await fetch('https://dummyjson.com/users');
@@ -40,7 +37,7 @@ const UserData: React.FC = () => {
 			const res = await response.json();
 			setData(res.users);
 		} catch (error) {
-			// setError(error as Error);
+			console.error(error);
 		} finally {
 			setLoading(false);
 		}
@@ -59,14 +56,15 @@ const UserData: React.FC = () => {
 		getFilteredItems();
 	}, [query, selectedCity]);
 
+	// function to get an Object with KEY : VAL as
+	// { CITY : OLDEST USER }
 	const getOldestPerCity = async () => {
 		let oldestPerCity: any = {};
-
 		const checkAge = (i: string, j: string) => {
 			const date1 = new Date(i);
 			const date2 = new Date(j);
-			console.log(date1)
-			console.log(date2)
+			console.log(date1);
+			console.log(date2);
 			if (date1 < date2) {
 				return true;
 			} else if (date1 > date2) {
@@ -74,8 +72,8 @@ const UserData: React.FC = () => {
 			} else {
 				return true;
 			}
-
 		};
+
 		data.forEach((user) => {
 			const city = user.address.city;
 			if (
@@ -88,12 +86,15 @@ const UserData: React.FC = () => {
 		return oldestPerCity;
 	};
 
+	// called when pagination is changed
 	const getCurrentData = () => {
 		const indexOfLastUser = currentPage * postPerPage;
 		const indexOfFirstUser = indexOfLastUser - postPerPage;
 		const currentUser = data.slice(indexOfFirstUser, indexOfLastUser);
 		setFilteredData(currentUser);
 	};
+
+	// Filters data based on different conditions, returns the filteredArray
 	const getFilteredItems = () => {
 		if (!query && !selectedCity) {
 			getCurrentData();
@@ -126,9 +127,12 @@ const UserData: React.FC = () => {
 		}
 	};
 
+	// handles the selected {city} from DropDown Component
 	const handleNameSubmit = (value: string) => {
 		setSelectedCity(value);
 	};
+
+	// RESET button functionality
 	const handleClear = () => {
 		setQuery('');
 		setSelectedCity('');
@@ -138,6 +142,8 @@ const UserData: React.FC = () => {
 	const paginate = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
 	};
+
+	// when list is empty, shows this component
 	const EmptyData = () => {
 		return (
 			<div className="emptyData">
@@ -146,6 +152,8 @@ const UserData: React.FC = () => {
 			</div>
 		);
 	};
+
+	// when searching with queries, shows this component
 	const Loading = () => {
 		return (
 			<div className="loadingData">

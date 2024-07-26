@@ -20,17 +20,20 @@ const Dropdown: React.FC<DropdownProps> = ({
 	selectedCity,
 }) => {
 	const [open, setOpen] = useState<boolean>(false);
-	const ref:any = useRef();
+	const ref: any = useRef();
 
-	useEffect(()=> {
-		let handler = (e : any) => {
+	// useEffect for handling the dropdown visibilty on outside click
+	useEffect(() => {
+		let handler = (e: any) => {
 			let node: any = ref.current;
-			if(node && !node.contains(e.target)){
-				setOpen(false)
+			if (node && !node.contains(e.target)) {
+				setOpen(false);
 			}
-		}
-		document.addEventListener("mousedown",handler)
-	},[])
+		};
+		document.addEventListener('mousedown', handler);
+	}, []);
+
+	// filtering unique cities in ascending order
 	let cities: string[] = [];
 	data.map((itm) => cities.push(itm.address.city));
 
@@ -47,11 +50,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 				{selectedCity === '' ? 'Select city' : selectedCity}{' '}
 				{open ? <IoIosArrowDown /> : <IoIosArrowUp />}
 			</button>
-			<div
-				className={`dropdown-content ${
-					open ? 'dropdown-content-active' : ''
-				}`}
-			>
+			<div className={`dropdown-content ${open ? 'dropdown-content-active' : ''}`}>
 				{uniqCities.sort().map((itm, index) => (
 					<li
 						key={index}
@@ -63,17 +62,6 @@ const Dropdown: React.FC<DropdownProps> = ({
 						{itm}
 					</li>
 				))}
-				{/* {uniq.map((itm) => (
-					<li
-						key={itm.id}
-						onClick={() => {
-							setOpen(false);
-							handleNameSubmit(itm.address.city);
-						}}
-					>
-						{itm.address.city}
-					</li>
-				))} */}
 			</div>
 		</div>
 	);

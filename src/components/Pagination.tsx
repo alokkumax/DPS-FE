@@ -13,6 +13,8 @@ const Pagination: React.FC<PaginationProps> = ({
 	paginate,
 	currentPage,
 }) => {
+
+	// Dividing total rows of data into pagination
 	const pageNumbers = [];
 	for (let i = 1; i <= Math.ceil(totalPosts / postPerPage); i++) {
 		pageNumbers.push(i);
